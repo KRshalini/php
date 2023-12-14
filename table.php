@@ -11,6 +11,7 @@ $total = mysqli_num_rows($data);
 if($total != 0){
     ?>
   <table>
+    <th>ID</th>
      <th>FirstName</th>
      <th>LastName</th>
      <th>Email</th>
@@ -26,6 +27,7 @@ if($total != 0){
     <?php
     while($result = mysqli_fetch_assoc($data)){
         echo "<tr>
+        <td>".$result['id']."</td>
         <td>".$result['firstname']."</td>
         <td>".$result['lastname']."</td>
         <td>".$result['email']."</td>
@@ -35,8 +37,13 @@ if($total != 0){
         <td>".$result['skills']."</td>
         <td>".$result['img']."</td>
         <td>".$result['location']."</td>
-        <td><a href='form1.php?'>Edit</a></td>
-        </tr>";
+
+        <td><a href='modify.php?id=$result[id]'>Edit</a>
+        <a href='delete.php?id=$result[id]'>Delete</a></td>
+
+        </tr>
+        ";
+        
     }
   
 }else{

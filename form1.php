@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 ?>
 <?php
 $servername = "localhost";
@@ -18,11 +18,12 @@ if ($conn) {
 ?>
 
 <html>
+  
 
   <style>
     .class{
         border-collapse:collapse;
-        background-color:skyblue;
+        background-color:white;
         position:center;
         box-sizing:border-box;
         margin: 10px 300px;
@@ -114,12 +115,13 @@ if ($conn) {
             <div class="input">
             
               <label for="location">Preferred location:</label><br>
-              <select name="location[]" multiple >
+              <textare></textarea>
+              <select name="location[]" multiple required="select-form-control" >
                  <option value="Madurai">Madurai</option>
                  <option value="Bangalore">Bangalore</option>
                  <option value="Chennai">Chennai</option>
-                 <option value="Cimbatore">Coimbatore</option>   
-                 <option value="Tirhcy">Trichy</option>          
+                 <option value="Coimbatore">Coimbatore</option>   
+                 <option value="Tirchy">Trichy</option>          
                  <option value="Hyderabad">Hyderabad</option>   
                   
               </select>
@@ -134,13 +136,14 @@ if ($conn) {
     </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.f.js"></script>
     <script src="form.js"></script>
   </body>
 </html>
 
 <?php
   if(isset($_POST['submit'])){
+    $id = $_POST['id'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
@@ -148,24 +151,22 @@ if ($conn) {
     $gender = $_POST['gender'];
     $native = $_POST['native'];
     $skills = $_POST['skills'];
-    $skills = $_POST['skills'];
-    $location = $_POST['location'];
+    $location = implode(',',$_POST['location']);
     $skills1 = implode(",",$skills);
   
     if(isset($_POST['native'])){
         $selected = $_POST['native'];
     }
-   $target_dir = "New folder/";
-   $target_file = $target_dir . basename($_FILES['uploadfile']['name']);
-   move_uploaded_file($_FILES['uploadfile']['tmp_name'], $target_file);
-    
+   $file = $_FILES["uploadfile"]["name"];
+   $tempname = $_FILES["uploadfile"]["temp_name"];
+   $folder = "" . $file;
+   move_uploaded_file("",$folder);
 
-   foreach($location as $loc){
-    echo $loc;
    
-   $sql = "insert into person_details(firstname,lastname,email,password,gender,native,skills,img,location) values('$firstname','$lastname','$email','$password','$gender','$native','$skills1','$target_file','$loc')";
+   
+   $sql = "insert into person_details(id,firstname,lastname,email,password,gender,native,skills,img,location) values('$id','$firstname','$lastname','$email','$password','$gender','$native','$skills1','$folder','$location')";
    $query = mysqli_query($conn,$sql);
-   }
+   
 
    if($query){
    echo "<script>alert('Succesfull');</script>";
