@@ -19,8 +19,8 @@ if($total != 0){
      <th>Gender</th>
      <th>Native</th>
      <th>Skills</th>
-     <th>Image</th>
      <th>Location</th>
+     
      <th>Edit/Delete</th>
      
     
@@ -35,10 +35,10 @@ if($total != 0){
         <td>".$result['gender']."</td>
         <td>".$result['native']."</td>
         <td>".$result['skills']."</td>
-        <td>".$result['img']."</td>
+        
         <td>".$result['location']."</td>
 
-        <td><a href='modify.php?id=$result[id]'>Edit</a>
+        <td><a href='modify.php?id=$result[id] & firstname=$result[firstname] & lastname=$result[lastname] & email=$result[email] & password=$result[password] & gender=$result[gender] & native=$result[native] & skills=$result[skills]  & location=$result[location]'>Edit</a>
         <a href='delete.php?id=$result[id]'>Delete</a></td>
 
         </tr>

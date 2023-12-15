@@ -11,7 +11,7 @@ $dbname = "details";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn) {
- // echo "Connection Success";
+  echo "Connection Success";
 }else{
     echo "Connection failed .mysqli_connect_error";
 }
@@ -143,7 +143,7 @@ if ($conn) {
 
 <?php
   if(isset($_POST['submit'])){
-    $id = $_POST['id'];
+    $id =$_POST['id']; 
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
@@ -151,20 +151,17 @@ if ($conn) {
     $gender = $_POST['gender'];
     $native = $_POST['native'];
     $skills = $_POST['skills'];
+   // $img = $_POST['img'];
     $location = implode(',',$_POST['location']);
     $skills1 = implode(",",$skills);
   
     if(isset($_POST['native'])){
         $selected = $_POST['native'];
     }
-   $file = $_FILES["uploadfile"]["name"];
-   $tempname = $_FILES["uploadfile"]["temp_name"];
-   $folder = "" . $file;
-   move_uploaded_file("",$folder);
-
    
    
-   $sql = "insert into person_details(id,firstname,lastname,email,password,gender,native,skills,img,location) values('$id','$firstname','$lastname','$email','$password','$gender','$native','$skills1','$folder','$location')";
+   
+   $sql = "insert into person_details(id,firstname,lastname,email,password,gender,native,skills,location) values('$id','$firstname','$lastname','$email','$password','$gender','$native','$skills1','$location')";
    $query = mysqli_query($conn,$sql);
    
 

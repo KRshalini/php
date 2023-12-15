@@ -1,14 +1,22 @@
 <?php
-include("reg.php");
-$id = $_GET['id'];
+ include("reg.php");
+ $id = $_GET['id'];
+ $firstname = $_GET['firstname'];
+ $lastname = $_GET['lastname'];
+ $email = $_GET['email'];
+ $password = $_GET['password'];
+ $gender = $_GET['gender'];
+ $native = $_GET['native'];
+ $skills = $_GET['skills'];
+ $location = $_GET['location'];
 
+ 
 $query = "select * from person_details where id='$id'";
 $data = mysqli_query($conn,$query);
 
+$total = mysqli_num_rows($data);
 
 $result = mysqli_fetch_assoc($data);
-
-
 
 $skills = isset($_POST['skills']) ;
 $skills1 = explode(",",$result['skills']);
@@ -17,10 +25,8 @@ $skills1 = explode(",",$result['skills']);
 
 $location = explode(",",$result['location']);
 
-
-
-
 ?>
+
 
 <html>
   
@@ -47,46 +53,48 @@ $location = explode(",",$result['location']);
         padding:20px 0px;
     }  
   </style>
-  <title>Update Form</title>
+  <title>FORM</title>
   <body>
  
     <div class="class">
         <form action="#" id="formvalidation"  method="POST" enctype="multipart/form-data">
         <div class="title">
-         <h1>Update Form</h1>
+         <h1>UPDATE FORM</h1>
         </div>
       <div class="form">
         <div class="input">
           <label for="fname">FirstName:</label>
-          <input type="text" value="<?php echo $result['firstname'] ?>" name="firstname"><br>
+          <input type="text" id="firstname" name="firstname" value="<?php echo $result['firstname'] ?>"
+          
+          ><br>
         </div>
 
         <div class="input">
           <label for="lname">LastName:</label>
-          <input type="text" value="<?php echo $result['lastname'] ?>" name="lastname"><br>
+          <input type="text" name="lastname"  value="<?php echo $result['lastname'] ?>" ><br>
         </div>
 
         <div class="input">
           <label for="email">Email:</label>
-          <input type="email"  value="<?php echo $result['email'] ?>" name="email"><br>
+          <input type="email" name="email" value="<?php echo $result['email'] ?>" ><br>
         </div>
 
         <div class="input">
           <label for="password">Password:</label>
-          <input type="password"  value="<?php echo $result['password'] ?>" name="password"><br>
+          <input type="password" name="password" value="<?php echo $result['password'] ?>" ><br>
         </div>
           
         <!-- radio button -->
         <div class="input">
           <label for="gender">Gender:</label><br>
-          <input type="radio" name="gender" value="Female"
+          <input type="radio" name="gender" value="Female"  
           <?php
           if($result['gender']=="Female"){
             echo "checked";
           }
           ?>
           >Female
-          <input type="radio" name="gender" value="Male"
+          <input type="radio" name="gender" value="Male" 
           <?php
           if($result['gender']=="Male"){
             echo "checked";
@@ -95,18 +103,7 @@ $location = explode(",",$result['location']);
           >Male<br>
         </div>
 
-        <!--  baseurl/$result['imag]
-          <a href="">Doc</a>
-         -->
-        <div class="input">
-        
-
-        <input type="file"  name="uploadfile"><br><br>
-        <input type="text" name="upload_img" <?php echo $result['img']?>
-        >
-
-        
-        </div>  
+          
   
 
         <!-- Dropdown -->
@@ -155,9 +152,14 @@ $location = explode(",",$result['location']);
             }
             ?>>Bangalore</option>
           </select>
+
+          <div class="input">
+        <input type="file" name="uploadfile"><br><br>
+        
+        </div>  
     
             <!-- checkbox -->
-          <div class="input">
+            <div class="input">
             <label for="skills">Skills:</label>
             <input type="checkbox"  name="skills[]" value="Java"
             <?php 
@@ -247,7 +249,7 @@ $location = explode(",",$result['location']);
             </div>
 
         <div class="input">
-            <input type="submit" name="submit" value="Update">   
+            <input type="submit" name="update" value="update">   
         </div>
 
       </div>
@@ -256,7 +258,7 @@ $location = explode(",",$result['location']);
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.f.js"></script>
-    <script src="form.js"></script>
+    
   </body>
 </html>
 
@@ -270,26 +272,25 @@ $location = explode(",",$result['location']);
     $gender = $_POST['gender'];
     $native = $_POST['native'];
     $skills = $_POST['skills'];
-    $skills = $_POST['skills'];
     $location = implode(',',$_POST['location']);
     $skills1 = implode(",",$skills);
   
     if(isset($_POST['native'])){
         $selected = $_POST['native'];
     }
-    $file = $_FILES["uploadfile"]["name"];
-    $tempname = $_FILES["uploadfile"]["temp_name"];
-    $folder = "" . $file;
-    move_uploaded_file("",$folder);
 
-   
-   $sql ="update person_details set firstname='$firstname',lastname='$lastname,email='$email',password='$password',gender='$gender',native='$native',skills='$native',img='$folder',location='$location' where id='$id'";
-   $query = mysqli_query($conn,$sql);
   
    
+   
 
+   // $sql ="update person_details set firstname='$firstname',lastname='$lastname,email='$email',password='$password',gender='$gender',native='$native',skills='$native',location='$location' where id='$id'";
+
+   
+   $sql = "UPDATE person_details SET firstname='$firstname',lastname='$lastname',email='$email',password='$password',gender='$gender', native='$native',skills='$skills',location='$location' where id='$id'";
+   $query = mysqli_query($conn,$sql);
    if($query){
-   echo "Updated";
+   echo "<script>alert('Succesfull');</script>";
+   //header('location:table.php');
    }else{
      echo "Failed to submit";
    }
@@ -297,6 +298,8 @@ $location = explode(",",$result['location']);
   }
 
 ?>
+
+
 
 
 
